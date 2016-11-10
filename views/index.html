@@ -1,0 +1,47 @@
+{% extends 'layout.html' %}
+
+{% block title %}sign up{% endblock %}
+
+{% block content %}
+
+  {% if not user %}
+      <div class = "signup">
+        <div class = "container">
+          <h1>{% if signin %}SingIn{% else %}Sign Up{% endif %} for New Account</h1>
+            <input type="text" class="form-control" name="userid" id = "userid"placeholder="USER ID">
+            <input type="password" class="form-control" name="pwd"id = "pwd" placeholder="PASSWARD">
+
+            {% if not signin %}
+            <input type="text" class="form-control forsignup" name="usern" id="name" placeholder="NAME">
+            <input type="email" class="form-control forsignup" name="email" id="email"placeholder="EMAIL">
+            {% endif %}
+
+            {% if not signin %}
+            <span id="error"></span><br>
+            <button type="submit" class="btn btn-info forsignin" id = "create">CREATE</button>
+            <button type="submit" class="btn btn-warning forsignin" id = "signIn">SIGN IN</button>
+            {% else %}
+            <span id="error"></span><br>
+            <button type="submit" class="btn btn-warning forsignin" id = "logIn">LOGIN IN</button>
+            <button type="submit" class="btn btn-info forsignin" id = "signUp">SIGN UP</button>
+            <a target="_self"
+               href="/auth/google"
+               class="btn btn-danger">
+            GOOGLE
+            </a>
+            {% endif %}
+        </div>
+      </div>
+  {% endif %}
+
+  {% if user %}
+
+
+
+
+
+
+ {% endif %}
+
+
+{% endblock %}

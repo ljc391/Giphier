@@ -1,0 +1,44 @@
+.signup {
+    padding-top: 50px;
+}
+.messager {
+    padding-top: 50px;
+}
+
+ #msg-box{
+
+        width:100%;
+        top:0;
+        margin-bottom:10px;
+        border: solid 1px lightgray;
+        border-radius: 5px;
+        overflow:auto;
+
+}
+#msg-box li{
+    list-style-type: none;
+}
+#msg li{
+    padding-top: 10px;
+}
+#msg span{
+    display:inline;
+    color: white;
+    background: #333;
+    padding: 4px 8px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 8px;
+    margin: 0 5px 0 0;
+}
+#msg p{
+        display:inline;
+}
+
+
+#input-msg{
+    border: solid 1px lightgray;
+    padding: 10px;
+    width: 100%;
+
+
+}
