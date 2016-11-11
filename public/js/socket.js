@@ -20,9 +20,10 @@ $( document ).ready(function() {
     //list users
     $.ajax({
         method:"GET",
-        url:"/message",
+        url:"/api/message",
         data:{userId:userid},
         success: function(response){
+            console.log("list user", response.users);
             $('#listUsers li').remove();
             var list = $('#listUsers');
             //console.log("users", response.users);
@@ -124,10 +125,10 @@ $( document ).ready(function() {
         for(msg in msgs){
             //console.log("m", msgs[msg].from.name);
             var span = $('<span>').text(msgs[msg].from.name);
-            var p = $('<p>').text(msgs[msg].content);
+            var img = $('<img>').attr('src',msgs[msg].content);
             var li = $('<li>');
             li.append(span);
-            li.append(p);
+            li.append(img);
             $('#msg').append(li);
             var message = document.getElementById("msg-box");
             message.scrollTop = message.scrollHeight;
@@ -182,6 +183,22 @@ $( document ).ready(function() {
                     var img = response.data.images.downsized.url;
                     socket.emit('chat message', name, img, receiver);
                     $('#input-msg').val('');
+                    console.log("post receiver", receiverId);
+                    $.ajax({
+                    method:"POST",
+                    url:"/message",
+                    data:{
+                        fromId:userId,
+                        toId: receiverId,
+                        img: img,
+                        isRead: true
+                    },
+                    success: function(response){
+                        if(response.success){
+                            console.log("db save")
+                        }
+                    }
+                })
                 }
             }
         })

@@ -185,7 +185,8 @@ router.get("/user/:id", function (req, res, next){
 })
 
 router.post("/message", function (req, res, next){
-    var msg = Message.create({content:req.body.msg});
+    console.log("post mst")
+    var msg = Message.create({content:req.body.img, isRead:req.body.isRead});
     var from = User.findById(req.body.fromId);
     var to = User.findById(req.body.toId);
     Promise.all([msg, from, to])
@@ -202,8 +203,8 @@ router.post("/message", function (req, res, next){
 
 
 })
-router.get("/message", function (req, res, next){
-    //console.log("main--", req.query.userId);
+router.get("/api/message", function (req, res, next){
+    console.log("main--", req.query.userId);
 
     var toUser = Message.findAll({include:[{model: User, as:"to", where:{id: req.query.userId}},{model: User, as:"from"}]});
     var fromUser = Message.findAll({include:[{model: User, as:"to"},{model: User, as:"from", where:{id: req.query.userId}}]});
@@ -236,7 +237,7 @@ router.get("/message", function (req, res, next){
 })
 
 router.get("/message/:fromId/:toId", function (req, res, next){
-    console.log("hrere");
+    console.log("load msg");
     Message.findAll({where:{$or:[{fromId:req.params.fromId, toId:req.params.toId}, {fromId:req.params.toId, toId: req.params.fromId }]}, include:[{model: User, as:"to"},{model: User, as:"from"}]})
     .then(function(msgs){
         console.log("msgs", msgs);
