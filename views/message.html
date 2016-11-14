@@ -1,43 +1,33 @@
 {% extends 'layout.html' %}
 
-{% block title %}sign up{% endblock %}
-
 {% block content %}
 
   {% if user %}
-      <div class = "messager" id={{user.id}}>
-        <div class = "container">
-
-            <div class="row">
-
-                <div class = "col-md-3">
-                    <h3>Mail Box</h3>
+      <div id={{user.id}}  class = "messager" >
+            <div class = "row">
+                <div class = "col-md-3  teal lighten-3" >
                     <div class="dropdown">
-                        <input type="text" id="searchUser" class="form-control dropdown-toggle " placeholder="Search..."  data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" text-align="center"/>
+                        <input type="text" id="searchUser" class="form-control dropdown-toggle " placeholder="Search..."
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" text-align="center"/>
                         <ul class="dropdown-menu" id="showUser" aria-labelledby="searchUser"></ul>
                     </div>
                     <ul id="listUsers">
                     </ul>
                 </div>
-
-                <div class="col-md-9" style="height:500px;">
-                    <div id="msg-box" style="height:450px;">
+                <div class="col-md-9   " >
+                    <div id="msg-box" style="height:620px;">
                         <ul id="msg"></ul>
                     </div>
                     <input type="text"  id="input-msg" class="form-control  "  placeholder="Message...">
+
                 </div>
-
             </div>
-
-        </div>
       </div>
-
-
-
   {% endif %}
   <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
   <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
   <script src="/js/socket.js"></script>
+  <script src="/js/main.js"></script>
 
 
 

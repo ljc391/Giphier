@@ -1,0 +1,34 @@
+{% extends 'layout.html' %}
+
+
+{% block content %}
+
+  {% if user %}
+      <div class = "signup valign-wrapper">
+        <div class = "container card-panel valign ">
+          <h3>PROFILE</h3>
+          <div class = "row">
+            <div class = "col-md-6">
+              <img src={{user.img}} alt="" class="circle responsive-img">
+            </div>
+            <div class = "col-md-6">
+              <div class="input-field col s12">
+                <input id="name" type="text" class="validate" name = "name" value = {{user.name[0].toUpperCase()+user.name.substring(1)}}>
+                <label for="userid">NAME</label>
+              </div>
+              <div class="input-field col s12">
+                <input name="pwd" id = "pwd"type="password" class="validate" value = {{user.password}}>
+                <label for="userpwdid">PASSWARD</label>
+              </div>
+              <div class="input-field col s12">
+                <input id="email" type="email" class="validate forsignup" name = "email" value = {{user.email}}>
+                <label for="usern">EMAIL</label>
+              </div>
+              <a class="waves-effect waves-light btn  amber lighten-2" id= "save">SAVE</a>
+
+            </div>
+          </div>
+        </div>
+      </div>
+  {% endif %}
+{% endblock %}

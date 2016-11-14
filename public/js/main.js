@@ -135,6 +135,19 @@ $( document ).ready(function() {
             }
         })
     })
+    $('#save').on('click', function(e){
+        e.preventDefault();
+        console.log("save!!")
+        $.ajax({
+            method:"PUT",
+            url:"/user/edit",
+            data:{
+                name:$('#name').val().toLowerCase(),
+                email:$('#email').val(),
+                password:$('#pwd').val()
+            }
+        })
+    })
 
 
 

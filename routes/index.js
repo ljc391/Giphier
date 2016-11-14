@@ -38,6 +38,23 @@ router.get('/', function (req, res) {
     }
 
 });
+
+router.get('/user', function (req, res, next) {
+    if (req.session.user) {
+        //user = Object.assign({}, req.session.user, {birth:req.session.user.birth.format('YYY-MM-DD')});
+        res.render('user',{ user: req.session.user});
+
+    }else if(req.session.passport){
+        //.format('yyyy-MM-dd')
+
+        res.render('user',{ user: req.session.passport.user});
+
+    }else{
+        res.redirect('/');//render('index', {signin: req.session.signin});
+
+    }
+});
+
 router.get('/user/signin', function (req, res, next) {
     //console.log(req.body.user);
      req.session.signin = true;
@@ -111,7 +128,7 @@ router.get('/user/edit', function (req, res, next){
     }
 })
 router.put('/user/edit', function (req, res, next){
-    console.log("backend--------------------------", req.body.gender, req.body.email, req.body.phone);
+    console.log("backend--------------------------",   req.body );
     console.log("user--------------------------", req.session.user);
     if(req.session.passport){
         User.findById(req.session.passport.user.id)
@@ -134,9 +151,9 @@ router.put('/user/edit', function (req, res, next){
         .then(function(user){
             //console.log("find user--------------------------", user)
            return  user.update({
-                gender: req.body.gender,
-                birth: req.body.birth,
-                phone: req.body.phone
+                password: req.body.password,
+                email: req.body.email,
+                name: req.body.name
             })
         })
         .then(function(user){
@@ -159,9 +176,7 @@ router.get('/user/trips', function (req, res, next){
     }
 
 })
-router.get('/message', function (req, res, next){
-        res.render('message');
-});
+
 
 router.get('/user/message', function (req, res, next){
 
@@ -186,25 +201,33 @@ router.get("/user/:id", function (req, res, next){
 
 router.post("/message", function (req, res, next){
     console.log("post mst")
-    var msg = Message.create({content:req.body.img, isRead:req.body.isRead});
-    var from = User.findById(req.body.fromId);
-    var to = User.findById(req.body.toId);
-    Promise.all([msg, from, to])
-    .then(function([msg, from, to]){
-        msg.setTo(to);
-        msg.setFrom(from);
-        return msg;
-    })
-    .then(function(msg){
+    var msg = Message.create({content:req.body.img, isRead:false, toId:req.body.toId, fromId:req.body.fromId});
+    // var from = User.findById(req.body.fromId);
+    // var to = User.findById(req.body.toId);
+    // Promise.all([msg, from, to])
+    // .then(function([msg, from, to]){
+    //     msg.setTo(to);
+    //     msg.setFrom(from);
+    //     return msg;
+    // })
+    // .then(function(msg){
         //console.log("res----------",msg);
         res.json({success:true});
-    })
+    // })
 
 
 
 })
+router.get("/api/user/:name", function (req, res, next){
+    User.findAll({where:{name:req.params.name}})
+    .then(function(user){
+        console.log("get user return id", user)
+        res.json({user:user});
+    })
+})
 router.get("/api/message", function (req, res, next){
-    console.log("main--", req.query.userId);
+    //console.log("main--", req.query.userId);
+
 
     var toUser = Message.findAll({include:[{model: User, as:"to", where:{id: req.query.userId}},{model: User, as:"from"}]});
     var fromUser = Message.findAll({include:[{model: User, as:"to"},{model: User, as:"from", where:{id: req.query.userId}}]});
@@ -240,8 +263,37 @@ router.get("/message/:fromId/:toId", function (req, res, next){
     console.log("load msg");
     Message.findAll({where:{$or:[{fromId:req.params.fromId, toId:req.params.toId}, {fromId:req.params.toId, toId: req.params.fromId }]}, include:[{model: User, as:"to"},{model: User, as:"from"}]})
     .then(function(msgs){
-        console.log("msgs", msgs);
+        console.log("msgs---------------------", msgs);
         res.json({success:true ,messages: msgs});
+    })
+})
+
+//find unread user
+router.get("/message/:fromId/:toId/isRead", function (req, res, next){
+
+    Message.findAll({where:{fromId:req.params.fromId, toId:req.params.toId, isRead:false}, include:[{model: User, as:"to"},{model: User, as:"from"}]})
+    .then(function(msgs){
+        console.log("ISREAD find it", msgs);
+        if(msgs.length >0){
+            res.json({success:true ,isRead: false, msgs:msgs});
+        }else{
+             res.json({success:true ,isRead: true});
+        }
+
+    })
+})
+
+//update to read
+router.put("/message/:fromId/:toId/isRead", function (req, res, next){
+
+    Message.findAll({where:{fromId:req.params.fromId, toId:req.params.toId, isRead:false}, include:[{model: User, as:"to"},{model: User, as:"from"}]})
+    .then(function(msgs){
+        console.log("find update", msgs);
+        msgs.forEach(function(msg){
+            msg.update({isRead:true})
+        })
+        res.json({success:true});
+
     })
 })
 
