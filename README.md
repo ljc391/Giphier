@@ -1,2 +1,3 @@
 # Giphier
-A messager that can translate vocabulary, short sentance to single image
+A messager that using API from Giphy to translate vocabulary, short sentance into single image.
+ 
