@@ -11,4 +11,4 @@ A messager that using API from Giphy and socket.io to translate vocabulary, shor
 <img src="http://i.picasion.com/pic83/aece49deb5b7aef09eff38d93107c675.gif" width="450" height="219" border="0" /> <br /> 
 
 ###Getting notification with user's profile picture
-<img src="http://i.picasion.com/pic83/42fc8df96d7d1768837827deb7a25234.gif" width="400" height="250" border="0" /><br />
+<img src="http://i.picasion.com/pic83/335fd8d3fc79e6d68a962eb55df973d2.gif" width="450" height="218" border="0"/></a><br />
