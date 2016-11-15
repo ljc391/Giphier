@@ -1,5 +1,5 @@
 # Giphier
-A messager that using API from Giphy and socket.io to translate vocabulary, short sentence into single image.<br />
+A messenger that using API from Giphy and socket.io to translate vocabulary, short sentence into single image.<br />
 Stack: Node.js, Sequelize, Socker.io, Giphy, Materialize
 
 ###User can sign up, sign in, and sign in with Google account.
